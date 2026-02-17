@@ -3,8 +3,15 @@
 :root {
     --primary-color: #FF5733;
     --secondary-color: #FFC300;
-    --background-color: #f0f0f0;
-    --text-color: #333;
+
+    --bg-color-light: #f0f0f0;
+    --text-color-light: #333;
+    --container-bg-light: white;
+
+    --bg-color-dark: #222;
+    --text-color-dark: #f0f0f0;
+    --container-bg-dark: #333;
+    
     --ball-size: 60px;
 }
 
@@ -15,20 +22,30 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: var(--background-color);
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
     background-image: url('https://www.transparenttextures.com/patterns/subtle-zebra-3d.png');
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body[data-theme='dark'] {
+    --bg-color-light: var(--bg-color-dark);
+    --text-color-light: var(--text-color-dark);
+    --container-bg-light: var(--container-bg-dark);
 }
 
 .container {
+    position: relative;
     text-align: center;
     padding: 2rem;
-    background-color: white;
+    background-color: var(--container-bg-light);
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
 }
 
 h1 {
-    color: var(--text-color);
+    color: var(--text-color-light);
     margin-bottom: 2rem;
     font-weight: 600;
 }
@@ -76,4 +93,58 @@ h1 {
 .generate-btn:active {
     transform: translateY(-1px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Theme Switch */
+.theme-switch-wrapper {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
 }

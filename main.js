@@ -1,5 +1,6 @@
 const generateBtn = document.querySelector('.generate-btn');
 const lottoNumbersContainer = document.querySelector('.lotto-numbers');
+const themeSwitch = document.querySelector('#checkbox');
 
 const getNumberColor = (number) => {
     if (number <= 10) return '#fbc400'; // 노란색
@@ -27,6 +28,31 @@ const generateLottoNumbers = () => {
         lottoNumbersContainer.appendChild(lottoBall);
     });
 };
+
+const switchTheme = (e) => {
+    if (e.target.checked) {
+        document.body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.body.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+themeSwitch.addEventListener('change', switchTheme);
+
+// Check for saved theme preference
+(function () {
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+        document.body.setAttribute('data-theme', currentTheme);
+
+        if (currentTheme === 'dark') {
+            themeSwitch.checked = true;
+        }
+    }
+})();
+
 
 generateBtn.addEventListener('click', generateLottoNumbers);
 
