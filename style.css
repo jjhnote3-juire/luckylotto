@@ -1,16 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 :root {
     --primary-color: #FF5733;
     --secondary-color: #FFC300;
 
-    --bg-color-light: #f0f0f0;
+    --bg-color-light: #f4f7f6;
     --text-color-light: #333;
     --container-bg-light: white;
+    --header-footer-bg-light: #ffffff;
+    --link-color-light: #333;
+    --link-hover-light: var(--primary-color);
 
-    --bg-color-dark: #222;
-    --text-color-dark: #f0f0f0;
-    --container-bg-dark: #333;
+    --bg-color-dark: #1a1a1a;
+    --text-color-dark: #e0e0e0;
+    --container-bg-dark: #2c2c2c;
+    --header-footer-bg-dark: #222;
+    --link-color-dark: #e0e0e0;
+    --link-hover-dark: var(--primary-color);
     
     --ball-size: 60px;
 }
@@ -18,13 +24,11 @@
 body {
     font-family: 'Poppins', sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     min-height: 100vh;
     margin: 0;
     background-color: var(--bg-color-light);
     color: var(--text-color-light);
-    background-image: url('https://www.transparenttextures.com/patterns/subtle-zebra-3d.png');
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -32,22 +36,88 @@ body[data-theme='dark'] {
     --bg-color-light: var(--bg-color-dark);
     --text-color-light: var(--text-color-dark);
     --container-bg-light: var(--container-bg-dark);
+    --header-footer-bg-light: var(--header-footer-bg-dark);
+    --link-color-light: var(--link-color-dark);
+    --link-hover-light: var(--link-hover-dark);
 }
 
 .container {
-    position: relative;
+    width: 90%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Header */
+.site-header {
+    background-color: var(--header-footer-bg-light);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.site-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.site-nav a {
+    text-decoration: none;
+    color: var(--link-color-light);
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.site-nav a:hover, .site-nav a.active {
+    color: var(--link-hover-light);
+}
+
+/* Main Content */
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+main .container {
     text-align: center;
-    padding: 2rem;
     background-color: var(--container-bg-light);
+    padding: 2rem;
     border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
 }
 
 h1 {
     color: var(--text-color-light);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: 600;
+}
+
+p.description {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
 }
 
 .lotto-numbers {
@@ -83,6 +153,7 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
 }
 
 .generate-btn:hover {
@@ -90,16 +161,37 @@ h1 {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.generate-btn:active {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+/* Static Pages Content */
+.static-page-content h1 {
+    margin-bottom: 2rem;
+}
+.static-page-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+.static-page-content p {
+    text-align: left;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+.static-page-content a {
+    color: var(--primary-color);
+}
+
+
+/* Footer */
+.site-footer {
+    background-color: var(--header-footer-bg-light);
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+    transition: background-color 0.3s;
 }
 
 /* Theme Switch */
 .theme-switch-wrapper {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
     display: flex;
     align-items: center;
 }
