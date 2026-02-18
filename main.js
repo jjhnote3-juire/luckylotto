@@ -1,5 +1,7 @@
 const generateBtn = document.querySelector('.generate-btn');
 const generateFiveBtn = document.querySelector('.generate-five-btn');
+const pickBtn = document.querySelector('.pick-btn');
+const miniDisplay = document.querySelector('.mini-display');
 const lottoNumbersContainer = document.querySelector('.lotto-numbers');
 const themeSwitch = document.querySelector('#checkbox');
 
@@ -45,6 +47,13 @@ const generateFiveLottoLines = () => {
     }
 };
 
+const pickRandomNumber = () => {
+    const randomNumber = Math.floor(Math.random() * 5) + 1;
+    miniDisplay.textContent = randomNumber;
+    miniDisplay.classList.add('pop');
+    setTimeout(() => miniDisplay.classList.remove('pop'), 300);
+};
+
 const switchTheme = (e) => {
     if (e.target.checked) {
         document.body.setAttribute('data-theme', 'dark');
@@ -72,6 +81,7 @@ themeSwitch.addEventListener('change', switchTheme);
 
 generateBtn.addEventListener('click', generateLottoNumbers);
 generateFiveBtn.addEventListener('click', generateFiveLottoLines);
+pickBtn.addEventListener('click', pickRandomNumber);
 
 // Initial generation
 generateLottoNumbers();

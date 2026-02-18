@@ -43,7 +43,7 @@ body[data-theme='dark'] {
 
 .container {
     width: 95%;
-    max-width: 960px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
 }
@@ -99,16 +99,38 @@ main {
     padding: 2rem 0;
 }
 
-main .container {
-    text-align: center;
+.main-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.generator-section, .mini-generator-section {
     background-color: var(--container-bg-light);
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
+    text-align: center;
 }
 
-h1 {
+.generator-section {
+    flex: 2;
+    min-width: 300px;
+}
+
+.mini-generator-section {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1, h2 {
     color: var(--text-color-light);
     margin-bottom: 1rem;
     font-weight: 600;
@@ -135,18 +157,33 @@ p.description {
     flex-wrap: wrap;
 }
 
-.lotto-ball {
-    width: var(--ball-size);
-    height: var(--ball-size);
+.lotto-ball, .mini-display {
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.3rem;
     font-weight: 600;
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
+}
+
+.lotto-ball {
+    width: var(--ball-size);
+    height: var(--ball-size);
+    font-size: 1.3rem;
+}
+
+.mini-display {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+    background-color: var(--primary-color);
+    margin: 2rem 0;
+}
+
+.pop {
+    transform: scale(1.2);
 }
 
 .button-group {
@@ -156,7 +193,7 @@ p.description {
     gap: 1rem;
 }
 
-.generate-btn, .generate-five-btn {
+.generate-btn, .generate-five-btn, .pick-btn {
     color: white;
     border: none;
     padding: 0.8rem 2rem;
@@ -178,7 +215,11 @@ p.description {
     background: linear-gradient(45deg, #2ecc71, #27ae60);
 }
 
-.generate-btn:hover, .generate-five-btn:hover {
+.pick-btn {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+}
+
+.generate-btn:hover, .generate-five-btn:hover, .pick-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
@@ -261,6 +302,17 @@ input:checked + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
+}
+
+@media (max-width: 900px) {
+    .main-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+    .generator-section, .mini-generator-section {
+        width: 100%;
+        max-width: 500px;
+    }
 }
 
 @media (max-width: 600px) {
