@@ -1,5 +1,4 @@
-const generateBtn = document.querySelector('.generate-btn');
-const generateFiveBtn = document.querySelector('.generate-five-btn');
+const amountBtns = document.querySelectorAll('.amount-btn');
 const pickBtn = document.querySelector('.pick-btn');
 const miniDisplay = document.querySelector('.mini-display');
 const lottoNumbersContainer = document.querySelector('.lotto-numbers');
@@ -35,7 +34,6 @@ const createLottoLine = () => {
     return lineContainer;
 };
 
-// 공통 생성 함수: 개수를 인자로 받고, append 여부를 결정할 수 있음
 const generateLottoLines = (count, append = false) => {
     if (!append) {
         lottoNumbersContainer.innerHTML = '';
@@ -45,29 +43,29 @@ const generateLottoLines = (count, append = false) => {
     }
 };
 
-// 일반 버튼 클릭 시 (기존 유지: 새로 생성)
-const generateOneLottoLine = () => generateLottoLines(1);
-const generateFiveLottoLines = () => generateLottoLines(5);
+const handleAmountButtonClick = (e) => {
+    const lines = parseInt(e.target.dataset.lines);
+    generateLottoLines(lines, false);
+};
 
 const pickRandomNumber = () => {
     const randomNumber = Math.floor(Math.random() * 5) + 1;
     miniDisplay.textContent = randomNumber;
     miniDisplay.classList.add('pop');
     
-    // 애니메이션 효과 후
     setTimeout(() => {
         miniDisplay.classList.remove('pop');
         
-        // 핵심 로직: 5,000원 버튼(5줄 생성)을 randomNumber 번 누른 효과
-        // 즉, 5 * randomNumber 줄을 생성함
+        // 자동 연동: 5,000원 버튼(5줄)을 randomNumber 번 누른 효과
         const totalLines = 5 * randomNumber;
-        generateLottoLines(totalLines, false); // 기존 번호는 지우고 새로 생성
+        generateLottoLines(totalLines, false);
         
-        // 5,000원 버튼 시각적 효과 (눌리는 느낌)
-        generateFiveBtn.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            generateFiveBtn.style.transform = '';
-        }, 100);
+        // 5,000원 버튼 시각적 피드백
+        const fiveKBtn = document.querySelector('.amount-btn[data-lines="5"]');
+        if (fiveKBtn) {
+            fiveKBtn.classList.add('active-flash');
+            setTimeout(() => fiveKBtn.classList.remove('active-flash'), 200);
+        }
     }, 300);
 };
 
@@ -81,6 +79,8 @@ const switchTheme = (e) => {
     }
 }
 
+amountBtns.forEach(btn => btn.addEventListener('click', handleAmountButtonClick));
+pickBtn.addEventListener('click', pickRandomNumber);
 themeSwitch.addEventListener('change', switchTheme);
 
 // Check for saved theme preference
@@ -88,17 +88,11 @@ themeSwitch.addEventListener('change', switchTheme);
     const currentTheme = localStorage.getItem('theme');
     if (currentTheme) {
         document.body.setAttribute('data-theme', currentTheme);
-
         if (currentTheme === 'dark') {
             themeSwitch.checked = true;
         }
     }
 })();
 
-
-generateBtn.addEventListener('click', generateOneLottoLine);
-generateFiveBtn.addEventListener('click', generateFiveLottoLines);
-pickBtn.addEventListener('click', pickRandomNumber);
-
-// Initial generation
-generateOneLottoLine();
+// Initial generation (default 1 line)
+generateLottoLines(1);

@@ -186,42 +186,56 @@ p.description {
     transform: scale(1.2);
 }
 
-.button-group {
+.amount-button-group {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
 }
 
-.generate-btn, .generate-five-btn, .pick-btn {
+.amount-btn, .pick-btn {
     color: white;
     border: none;
-    padding: 0.8rem 2rem;
-    font-size: 1.2rem;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.generate-btn {
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+.amount-btn {
+    background: linear-gradient(45deg, #FF5733, #FF8C66);
+    flex: 1;
+    min-width: 100px;
+    max-width: 150px;
 }
 
-.generate-five-btn {
+.amount-btn[data-lines="5"] {
     background: linear-gradient(45deg, #2ecc71, #27ae60);
 }
 
 .pick-btn {
     background: linear-gradient(45deg, #3498db, #2980b9);
+    width: 100%;
+    max-width: 200px;
 }
 
-.generate-btn:hover, .generate-five-btn:hover, .pick-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+.amount-btn:hover, .pick-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.active-flash {
+    animation: flash 0.2s ease-in-out;
+}
+
+@keyframes flash {
+    0% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.1); filter: brightness(1.5); }
+    100% { transform: scale(1); filter: brightness(1); }
 }
 
 /* Static Pages Content */
@@ -324,5 +338,9 @@ input:checked + .slider:before {
     }
     .lotto-line {
         gap: 0.5rem;
+    }
+    .amount-btn {
+        min-width: 80px;
+        font-size: 0.9rem;
     }
 }
