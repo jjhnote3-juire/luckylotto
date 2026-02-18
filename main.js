@@ -35,23 +35,35 @@ const createLottoLine = () => {
     return lineContainer;
 };
 
-const generateLottoNumbers = () => {
+// 공통 생성 함수: 개수를 인자로 받음
+const generateLottoLines = (count) => {
     lottoNumbersContainer.innerHTML = '';
-    lottoNumbersContainer.appendChild(createLottoLine());
-};
-
-const generateFiveLottoLines = () => {
-    lottoNumbersContainer.innerHTML = '';
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < count; i++) {
         lottoNumbersContainer.appendChild(createLottoLine());
     }
 };
+
+const generateOneLottoLine = () => generateLottoLines(1);
+const generateFiveLottoLines = () => generateLottoLines(5);
 
 const pickRandomNumber = () => {
     const randomNumber = Math.floor(Math.random() * 5) + 1;
     miniDisplay.textContent = randomNumber;
     miniDisplay.classList.add('pop');
-    setTimeout(() => miniDisplay.classList.remove('pop'), 300);
+    
+    // 애니메이션 효과 후 로또 번호 자동 생성
+    setTimeout(() => {
+        miniDisplay.classList.remove('pop');
+        
+        // 뽑힌 숫자만큼 로또 번호 생성
+        generateLottoLines(randomNumber);
+        
+        // 5,000원 버튼에 시각적 피드백 (반짝임)
+        generateFiveBtn.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            generateFiveBtn.style.transform = '';
+        }, 200);
+    }, 300);
 };
 
 const switchTheme = (e) => {
@@ -79,9 +91,9 @@ themeSwitch.addEventListener('change', switchTheme);
 })();
 
 
-generateBtn.addEventListener('click', generateLottoNumbers);
+generateBtn.addEventListener('click', generateOneLottoLine);
 generateFiveBtn.addEventListener('click', generateFiveLottoLines);
 pickBtn.addEventListener('click', pickRandomNumber);
 
 // Initial generation
-generateLottoNumbers();
+generateOneLottoLine();
