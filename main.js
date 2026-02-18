@@ -54,6 +54,7 @@ const handleAmountButtonClick = (e) => {
     const btn = e.target;
     currentSelectedLines = parseInt(btn.dataset.lines);
     updateActiveButton(btn);
+    // 버튼 클릭 시 즉시 번호 생성 (선택한 줄 수만큼)
     generateLottoLines(currentSelectedLines, false);
 };
 
@@ -65,11 +66,11 @@ const pickRandomNumber = () => {
     setTimeout(() => {
         miniDisplay.classList.remove('pop');
         
-        // 선택된 금액 버튼의 배수만큼 생성 (예: 2,000원 선택 시 2 * 추첨숫자)
-        const totalLines = currentSelectedLines * randomNumber;
-        generateLottoLines(totalLines, false);
+        // 사용자가 선택한 금액(줄 수)에 맞춰서 생성
+        // 추첨 결과(randomNumber)와 상관없이 선택된 줄 수(currentSelectedLines)를 유지
+        generateLottoLines(currentSelectedLines, false);
         
-        // 선택된 버튼에 시각적 피드백 (반짝임 효과)
+        // 선택된 버튼에 시각적 피드백
         const activeBtn = document.querySelector('.amount-btn.active');
         if (activeBtn) {
             activeBtn.classList.add('active-flash');
@@ -103,7 +104,7 @@ themeSwitch.addEventListener('change', switchTheme);
     }
 })();
 
-// 초기화: 1,000원 버튼 활성화
+// 초기화: 1,000원 버튼 활성화 및 1줄 생성
 const defaultBtn = document.querySelector('.amount-btn[data-lines="1"]');
 if (defaultBtn) {
     updateActiveButton(defaultBtn);
