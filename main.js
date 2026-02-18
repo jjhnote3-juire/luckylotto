@@ -35,14 +35,17 @@ const createLottoLine = () => {
     return lineContainer;
 };
 
-// 공통 생성 함수: 개수를 인자로 받음
-const generateLottoLines = (count) => {
-    lottoNumbersContainer.innerHTML = '';
+// 공통 생성 함수: 개수를 인자로 받고, append 여부를 결정할 수 있음
+const generateLottoLines = (count, append = false) => {
+    if (!append) {
+        lottoNumbersContainer.innerHTML = '';
+    }
     for (let i = 0; i < count; i++) {
         lottoNumbersContainer.appendChild(createLottoLine());
     }
 };
 
+// 일반 버튼 클릭 시 (기존 유지: 새로 생성)
 const generateOneLottoLine = () => generateLottoLines(1);
 const generateFiveLottoLines = () => generateLottoLines(5);
 
@@ -51,18 +54,20 @@ const pickRandomNumber = () => {
     miniDisplay.textContent = randomNumber;
     miniDisplay.classList.add('pop');
     
-    // 애니메이션 효과 후 로또 번호 자동 생성
+    // 애니메이션 효과 후
     setTimeout(() => {
         miniDisplay.classList.remove('pop');
         
-        // 뽑힌 숫자만큼 로또 번호 생성
-        generateLottoLines(randomNumber);
+        // 핵심 로직: 5,000원 버튼(5줄 생성)을 randomNumber 번 누른 효과
+        // 즉, 5 * randomNumber 줄을 생성함
+        const totalLines = 5 * randomNumber;
+        generateLottoLines(totalLines, false); // 기존 번호는 지우고 새로 생성
         
-        // 5,000원 버튼에 시각적 피드백 (반짝임)
-        generateFiveBtn.style.transform = 'scale(1.05)';
+        // 5,000원 버튼 시각적 효과 (눌리는 느낌)
+        generateFiveBtn.style.transform = 'scale(0.95)';
         setTimeout(() => {
             generateFiveBtn.style.transform = '';
-        }, 200);
+        }, 100);
     }, 300);
 };
 
