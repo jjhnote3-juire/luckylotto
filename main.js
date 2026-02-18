@@ -38,6 +38,7 @@ const createLottoLine = () => {
 };
 
 const generateLottoLines = (count, append = false) => {
+    if (!lottoNumbersContainer) return;
     if (!append) {
         lottoNumbersContainer.innerHTML = '';
     }
@@ -47,6 +48,7 @@ const generateLottoLines = (count, append = false) => {
 };
 
 const updateActiveButton = (selectedBtn) => {
+    if (!selectedBtn) return;
     amountBtns.forEach(btn => btn.classList.remove('active'));
     selectedBtn.classList.add('active');
 };
@@ -60,7 +62,7 @@ const handleAmountButtonClick = (e) => {
 };
 
 const pickRandomNumber = () => {
-    if (isAnimating) return;
+    if (!miniDisplay || isAnimating) return;
     isAnimating = true;
 
     const randomNumber = Math.floor(Math.random() * 5) + 1;
@@ -110,24 +112,33 @@ const switchTheme = (e) => {
     }
 }
 
-amountBtns.forEach(btn => btn.addEventListener('click', handleAmountButtonClick));
-pickBtn.addEventListener('click', pickRandomNumber);
-themeSwitch.addEventListener('change', switchTheme);
+// Event Listeners with Null Checks
+if (amountBtns.length > 0) {
+    amountBtns.forEach(btn => btn.addEventListener('click', handleAmountButtonClick));
+}
+if (pickBtn) {
+    pickBtn.addEventListener('click', pickRandomNumber);
+}
+if (themeSwitch) {
+    themeSwitch.addEventListener('change', switchTheme);
+}
 
 // Check for saved theme preference
 (function () {
     const currentTheme = localStorage.getItem('theme');
     if (currentTheme) {
         document.body.setAttribute('data-theme', currentTheme);
-        if (currentTheme === 'dark') {
+        if (themeSwitch && currentTheme === 'dark') {
             themeSwitch.checked = true;
         }
     }
 })();
 
-// 초기화
-const defaultBtn = document.querySelector('.amount-btn[data-lines="1"]');
-if (defaultBtn) {
-    updateActiveButton(defaultBtn);
-    generateLottoLines(1);
+// 초기화 (메인 페이지 전용)
+if (lottoNumbersContainer) {
+    const defaultBtn = document.querySelector('.amount-btn[data-lines="1"]');
+    if (defaultBtn) {
+        updateActiveButton(defaultBtn);
+    }
+    generateLottoLines(currentSelectedLines);
 }
