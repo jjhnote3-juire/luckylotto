@@ -5,6 +5,7 @@ const lottoNumbersContainer = document.querySelector('.lotto-numbers');
 const themeSwitch = document.querySelector('#checkbox');
 
 let currentSelectedLines = 1; // 기본 선택: 1,000원(1줄)
+let isAnimating = false; // 애니메이션 중 중복 클릭 방지
 
 const getNumberColor = (number) => {
     if (number <= 10) return '#fbc400'; // 노란색
@@ -51,31 +52,51 @@ const updateActiveButton = (selectedBtn) => {
 };
 
 const handleAmountButtonClick = (e) => {
+    if (isAnimating) return; // 애니메이션 중에는 금액 변경 불가
     const btn = e.target;
     currentSelectedLines = parseInt(btn.dataset.lines);
     updateActiveButton(btn);
-    // 버튼 클릭 시 즉시 번호 생성 (선택한 줄 수만큼)
     generateLottoLines(currentSelectedLines, false);
 };
 
 const pickRandomNumber = () => {
+    if (isAnimating) return;
+    isAnimating = true;
+
     const randomNumber = Math.floor(Math.random() * 5) + 1;
     miniDisplay.textContent = randomNumber;
     miniDisplay.classList.add('pop');
     
+    // 1단계: 추첨 숫자 표시 애니메이션 (0.3초)
     setTimeout(() => {
         miniDisplay.classList.remove('pop');
         
-        // 사용자가 선택한 금액(줄 수)에 맞춰서 생성
-        // 추첨 결과(randomNumber)와 상관없이 선택된 줄 수(currentSelectedLines)를 유지
-        generateLottoLines(currentSelectedLines, false);
+        // 2단계: 추첨 결과(randomNumber) 횟수만큼 번호 교체 애니메이션 실행
+        let count = 0;
+        const intervalTime = 150; // 교체 속도 (0.15초)
         
-        // 선택된 버튼에 시각적 피드백
-        const activeBtn = document.querySelector('.amount-btn.active');
-        if (activeBtn) {
-            activeBtn.classList.add('active-flash');
-            setTimeout(() => activeBtn.classList.remove('active-flash'), 400);
-        }
+        const rollEffect = setInterval(() => {
+            generateLottoLines(currentSelectedLines, false);
+            count++;
+            
+            // 시각적 효과 (깜빡임)
+            const activeBtn = document.querySelector('.amount-btn.active');
+            if (activeBtn) {
+                activeBtn.style.opacity = (count % 2 === 0) ? '0.5' : '1';
+            }
+
+            if (count >= randomNumber) {
+                clearInterval(rollEffect);
+                isAnimating = false; // 애니메이션 종료
+                
+                if (activeBtn) {
+                    activeBtn.style.opacity = '1';
+                    activeBtn.classList.add('active-flash');
+                    setTimeout(() => activeBtn.classList.remove('active-flash'), 400);
+                }
+            }
+        }, intervalTime);
+
     }, 300);
 };
 
@@ -104,7 +125,7 @@ themeSwitch.addEventListener('change', switchTheme);
     }
 })();
 
-// 초기화: 1,000원 버튼 활성화 및 1줄 생성
+// 초기화
 const defaultBtn = document.querySelector('.amount-btn[data-lines="1"]');
 if (defaultBtn) {
     updateActiveButton(defaultBtn);
