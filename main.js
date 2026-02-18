@@ -4,6 +4,8 @@ const miniDisplay = document.querySelector('.mini-display');
 const lottoNumbersContainer = document.querySelector('.lotto-numbers');
 const themeSwitch = document.querySelector('#checkbox');
 
+let currentSelectedLines = 1; // 기본 선택: 1,000원(1줄)
+
 const getNumberColor = (number) => {
     if (number <= 10) return '#fbc400'; // 노란색
     if (number <= 20) return '#69c8f2'; // 파란색
@@ -43,9 +45,16 @@ const generateLottoLines = (count, append = false) => {
     }
 };
 
+const updateActiveButton = (selectedBtn) => {
+    amountBtns.forEach(btn => btn.classList.remove('active'));
+    selectedBtn.classList.add('active');
+};
+
 const handleAmountButtonClick = (e) => {
-    const lines = parseInt(e.target.dataset.lines);
-    generateLottoLines(lines, false);
+    const btn = e.target;
+    currentSelectedLines = parseInt(btn.dataset.lines);
+    updateActiveButton(btn);
+    generateLottoLines(currentSelectedLines, false);
 };
 
 const pickRandomNumber = () => {
@@ -55,7 +64,17 @@ const pickRandomNumber = () => {
     
     setTimeout(() => {
         miniDisplay.classList.remove('pop');
-        // 자동 생성 로직 제거: 이제 번호만 보여줍니다.
+        
+        // 선택된 금액 버튼의 배수만큼 생성 (예: 2,000원 선택 시 2 * 추첨숫자)
+        const totalLines = currentSelectedLines * randomNumber;
+        generateLottoLines(totalLines, false);
+        
+        // 선택된 버튼에 시각적 피드백 (반짝임 효과)
+        const activeBtn = document.querySelector('.amount-btn.active');
+        if (activeBtn) {
+            activeBtn.classList.add('active-flash');
+            setTimeout(() => activeBtn.classList.remove('active-flash'), 400);
+        }
     }, 300);
 };
 
@@ -84,5 +103,9 @@ themeSwitch.addEventListener('change', switchTheme);
     }
 })();
 
-// Initial generation (default 1 line)
-generateLottoLines(1);
+// 초기화: 1,000원 버튼 활성화
+const defaultBtn = document.querySelector('.amount-btn[data-lines="1"]');
+if (defaultBtn) {
+    updateActiveButton(defaultBtn);
+    generateLottoLines(1);
+}
