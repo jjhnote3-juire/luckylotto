@@ -18,7 +18,7 @@
     --link-color-dark: #e0e0e0;
     --link-hover-dark: var(--primary-color);
     
-    --ball-size: 60px;
+    --ball-size: 50px;
 }
 
 body {
@@ -42,7 +42,7 @@ body[data-theme='dark'] {
 }
 
 .container {
-    width: 90%;
+    width: 95%;
     max-width: 960px;
     margin: 0 auto;
     padding: 1rem;
@@ -122,9 +122,16 @@ p.description {
 
 .lotto-numbers {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
     margin-bottom: 2rem;
+}
+
+.lotto-line {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
     flex-wrap: wrap;
 }
 
@@ -135,15 +142,21 @@ p.description {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }
 
-.generate-btn {
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.generate-btn, .generate-five-btn {
     color: white;
     border: none;
     padding: 0.8rem 2rem;
@@ -153,10 +166,19 @@ p.description {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 300px;
 }
 
-.generate-btn:hover {
+.generate-btn {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+}
+
+.generate-five-btn {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+}
+
+.generate-btn:hover, .generate-five-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
@@ -239,4 +261,16 @@ input:checked + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
+}
+
+@media (max-width: 600px) {
+    :root {
+        --ball-size: 40px;
+    }
+    .lotto-ball {
+        font-size: 1.1rem;
+    }
+    .lotto-line {
+        gap: 0.5rem;
+    }
 }

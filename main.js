@@ -1,4 +1,5 @@
 const generateBtn = document.querySelector('.generate-btn');
+const generateFiveBtn = document.querySelector('.generate-five-btn');
 const lottoNumbersContainer = document.querySelector('.lotto-numbers');
 const themeSwitch = document.querySelector('#checkbox');
 
@@ -10,8 +11,7 @@ const getNumberColor = (number) => {
     return '#b0d840'; // 초록색
 };
 
-const generateLottoNumbers = () => {
-    lottoNumbersContainer.innerHTML = '';
+const createLottoLine = () => {
     const numbers = new Set();
     while (numbers.size < 6) {
         const randomNumber = Math.floor(Math.random() * 45) + 1;
@@ -19,14 +19,30 @@ const generateLottoNumbers = () => {
     }
 
     const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
+    const lineContainer = document.createElement('div');
+    lineContainer.classList.add('lotto-line');
 
     sortedNumbers.forEach(number => {
         const lottoBall = document.createElement('div');
         lottoBall.classList.add('lotto-ball');
         lottoBall.textContent = number;
         lottoBall.style.backgroundColor = getNumberColor(number);
-        lottoNumbersContainer.appendChild(lottoBall);
+        lineContainer.appendChild(lottoBall);
     });
+
+    return lineContainer;
+};
+
+const generateLottoNumbers = () => {
+    lottoNumbersContainer.innerHTML = '';
+    lottoNumbersContainer.appendChild(createLottoLine());
+};
+
+const generateFiveLottoLines = () => {
+    lottoNumbersContainer.innerHTML = '';
+    for (let i = 0; i < 5; i++) {
+        lottoNumbersContainer.appendChild(createLottoLine());
+    }
 };
 
 const switchTheme = (e) => {
@@ -55,6 +71,7 @@ themeSwitch.addEventListener('change', switchTheme);
 
 
 generateBtn.addEventListener('click', generateLottoNumbers);
+generateFiveBtn.addEventListener('click', generateFiveLottoLines);
 
 // Initial generation
 generateLottoNumbers();
