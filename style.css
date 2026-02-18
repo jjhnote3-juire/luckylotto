@@ -43,7 +43,7 @@ body[data-theme='dark'] {
 
 .container {
     width: 95%;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 1rem;
 }
@@ -99,46 +99,76 @@ main {
     padding: 2rem 0;
 }
 
-.main-layout {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.generator-section, .mini-generator-section {
+main .container {
+    text-align: center;
     background-color: var(--container-bg-light);
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
-    text-align: center;
 }
 
-.generator-section {
-    flex: 2;
-    min-width: 300px;
-}
-
-.mini-generator-section {
-    flex: 1;
-    min-width: 250px;
+.header-with-picker {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
 }
 
-h1, h2 {
+h1 {
     color: var(--text-color-light);
-    margin-bottom: 1rem;
+    margin: 0;
     font-weight: 600;
+}
+
+.mini-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(0,0,0,0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+}
+
+.mini-display {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.pick-btn {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pick-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.pop {
+    transform: scale(1.2);
 }
 
 p.description {
     max-width: 600px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 2.5rem;
     line-height: 1.6;
 }
 
@@ -147,7 +177,7 @@ p.description {
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .lotto-line {
@@ -157,85 +187,51 @@ p.description {
     flex-wrap: wrap;
 }
 
-.lotto-ball, .mini-display {
+.lotto-ball {
+    width: var(--ball-size);
+    height: var(--ball-size);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.3rem;
     font-weight: 600;
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }
 
-.lotto-ball {
-    width: var(--ball-size);
-    height: var(--ball-size);
-    font-size: 1.3rem;
-}
-
-.mini-display {
-    width: 80px;
-    height: 80px;
-    font-size: 2.5rem;
-    background-color: var(--primary-color);
-    margin: 2rem 0;
-}
-
-.pop {
-    transform: scale(1.2);
-}
-
 .amount-button-group {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.8rem;
-    margin-top: 1rem;
+    gap: 1rem;
 }
 
-.amount-btn, .pick-btn {
+.amount-btn {
     color: white;
     border: none;
-    padding: 0.7rem 1.2rem;
-    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
     font-weight: 600;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    min-width: 120px;
 }
 
 .amount-btn {
     background: linear-gradient(45deg, #FF5733, #FF8C66);
-    flex: 1;
-    min-width: 100px;
-    max-width: 150px;
 }
 
 .amount-btn[data-lines="5"] {
     background: linear-gradient(45deg, #2ecc71, #27ae60);
 }
 
-.pick-btn {
-    background: linear-gradient(45deg, #3498db, #2980b9);
-    width: 100%;
-    max-width: 200px;
-}
-
-.amount-btn:hover, .pick-btn:hover {
+.amount-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-.active-flash {
-    animation: flash 0.2s ease-in-out;
-}
-
-@keyframes flash {
-    0% { transform: scale(1); filter: brightness(1); }
-    50% { transform: scale(1.1); filter: brightness(1.5); }
-    100% { transform: scale(1); filter: brightness(1); }
 }
 
 /* Static Pages Content */
@@ -318,14 +314,10 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-@media (max-width: 900px) {
-    .main-layout {
+@media (max-width: 768px) {
+    .header-with-picker {
         flex-direction: column;
-        align-items: center;
-    }
-    .generator-section, .mini-generator-section {
-        width: 100%;
-        max-width: 500px;
+        gap: 0.5rem;
     }
 }
 
@@ -340,7 +332,8 @@ input:checked + .slider:before {
         gap: 0.5rem;
     }
     .amount-btn {
-        min-width: 80px;
-        font-size: 0.9rem;
+        min-width: 100px;
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
     }
 }

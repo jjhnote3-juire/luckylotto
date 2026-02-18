@@ -55,17 +55,7 @@ const pickRandomNumber = () => {
     
     setTimeout(() => {
         miniDisplay.classList.remove('pop');
-        
-        // 자동 연동: 5,000원 버튼(5줄)을 randomNumber 번 누른 효과
-        const totalLines = 5 * randomNumber;
-        generateLottoLines(totalLines, false);
-        
-        // 5,000원 버튼 시각적 피드백
-        const fiveKBtn = document.querySelector('.amount-btn[data-lines="5"]');
-        if (fiveKBtn) {
-            fiveKBtn.classList.add('active-flash');
-            setTimeout(() => fiveKBtn.classList.remove('active-flash'), 200);
-        }
+        // 자동 생성 로직 제거: 이제 번호만 보여줍니다.
     }, 300);
 };
 

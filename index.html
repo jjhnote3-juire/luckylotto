@@ -31,27 +31,25 @@
     </header>
 
     <main>
-        <div class="container main-layout">
-            <section class="generator-section">
+        <div class="container">
+            <div class="header-with-picker">
                 <h1>로또 번호 생성기</h1>
-                <p class="description">
-                    로또 번호 생성을 도와주는 당신의 개인 비서 LuckyLotto에 오신 것을 환영합니다! 아래에서 원하는 금액을 선택하여 번호를 생성하세요. (1,000원당 1줄)
-                </p>
-                <div class="lotto-numbers"></div>
-                <div class="amount-button-group">
-                    <button class="amount-btn" data-lines="1">1,000원</button>
-                    <button class="amount-btn" data-lines="2">2,000원</button>
-                    <button class="amount-btn" data-lines="3">3,000원</button>
-                    <button class="amount-btn" data-lines="4">4,000원</button>
-                    <button class="amount-btn" data-lines="5">5,000원</button>
+                <div class="mini-picker">
+                    <div class="mini-display">-</div>
+                    <button class="pick-btn">추첨</button>
                 </div>
-            </section>
-
-            <section class="mini-generator-section">
-                <h2>1~5 랜덤 추첨</h2>
-                <div class="mini-display">-</div>
-                <button class="pick-btn">번호 뽑기</button>
-            </section>
+            </div>
+            <p class="description">
+                로또 번호 생성을 도와주는 당신의 개인 비서 LuckyLotto에 오신 것을 환영합니다! 아래에서 원하는 금액을 선택하여 번호를 생성하세요. (1,000원당 1줄)
+            </p>
+            <div class="lotto-numbers"></div>
+            <div class="amount-button-group">
+                <button class="amount-btn" data-lines="1">1,000원</button>
+                <button class="amount-btn" data-lines="2">2,000원</button>
+                <button class="amount-btn" data-lines="3">3,000원</button>
+                <button class="amount-btn" data-lines="4">4,000원</button>
+                <button class="amount-btn" data-lines="5">5,000원</button>
+            </div>
         </div>
     </main>
 
